@@ -1,10 +1,8 @@
 <template>
     <div class="formview">
       <Forms @datavalues="fetched" @editData="updateStudent" :existData="editFormData"/>
-    <!-- </div>
-    <div class="tableview"> -->
       <br>
-      <table>
+      <table v-if="students.length > 0">
         <thead>
           <tr>
             <th>Name</th>
