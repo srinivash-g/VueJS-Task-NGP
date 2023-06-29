@@ -3,6 +3,7 @@
 <form @submit.prevent="insert">
     <label for="name">Name:</label><br>
     <input type="text" v-model="name" required><br>
+    <span class="error-message" v-if="!isValidName">{{ nameErrorMessage }}</span><br>
     <label for="age">Age:</label><br>
     <input type="number" v-model="age" required><br>
     <label for="email">Email id:</label><br>
@@ -11,6 +12,7 @@
     <input type="cgpa" v-model="cgpa" required><br>
     <label for="phone">Mobile number:</label><br>
     <input type="number" v-model="phone" required><br><br>
+    <span class="error-message" v-if="!isValidPhoneNumber">{{ phoneErrorMessage }}</span><br>
     <button type="submit">{{ editMode ? 'Update' : 'Insert' }}</button>
   </form>
 </template>
@@ -29,9 +31,21 @@ export default{
             email:' ',
             cgpa:' ',
             phone:' ',
-            editMode: false
+            editMode: false,
+            nameErrorMessage: '',
+            phoneErrorMessage: ''
         }
+    }, 
+    computed: {
+    isValidName() {
+      const nameRegex = /^[A-Za-z\s]+$/; 
+      return nameRegex.test(this.name);
     },
+    isValidPhoneNumber() {
+      const phoneNumberRegex = /^\d{10}$/; // Only allows exactly 10 digits
+      return phoneNumberRegex.test(this.phone);
+    }
+  },
     watch: {
     existData: {
       immediate: true,
@@ -51,6 +65,17 @@ export default{
   },
     methods:{
         insert(){
+          this.resetErrors();
+
+          if (!this.isValidName) {
+          this.nameErrorMessage = 'Only Characters are allowed';
+          return;
+          }
+          if (!this.isValidPhoneNumber) {
+        this.phoneErrorMessage = 'Only 10 digits are allowed';
+        return;
+              }
+             
             const formDetails={
             name:this.name,
             age:this.age,
@@ -73,6 +98,9 @@ export default{
             this.cgpa = "";
             this.phone = "";
             this.editMode = false;
+    },resetErrors() {
+      this.nameErrorMessage = '';
+      this.phoneErrorMessage = '';
     }
         }
     }
