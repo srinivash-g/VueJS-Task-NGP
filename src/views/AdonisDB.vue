@@ -1,5 +1,5 @@
 <template>
-    <div class="student._id">
+    <div class="studtable">
        <table>
              <tr>
                <th>Student ID</th>
@@ -7,6 +7,7 @@
                <th>Roll no</th>
                <th>Department ID</th>
                <th>Update</th>
+               <th>Delete</th>
              </tr>
              <tr v-for="student,index in list" :key="index">
                <td>{{ student.stud_id }}</td>
@@ -16,21 +17,28 @@
                <td>
             <button @click="editStudent(index)">Edit</button>
            </td>
+           <td>
+            <button @click="deleteStudent(index)">Delete</button>
+           </td>
              </tr>
          </table><br><br>
          <RouterLink to="/adonisinsert">Insert new Student</RouterLink>
+         <!-- <Global/> -->
     </div>
 </template>
 <script>
 import axios from 'axios';
-
+//import Global from '@/components/GlobalTable.vue';
         export default{
             data:function(){
                 return{
                    list:[]
                 }
             },
-            mounted() {
+            components:{
+              //Global
+    },
+    mounted() {
     axios
     .get('http://localhost:3333/Displayall')
       .then(response => {
@@ -39,12 +47,24 @@ import axios from 'axios';
     })
   },methods:{
     editStudent(index) {
-              this.editIndex = index;
-              this.editFormData = { ...this.students[index] };
-         }
-  }
-            
+        this.$router.push({
+        name: 'adonisupdate',
+        query: {
+          editIndex: index,
+          editFormData: JSON.stringify(this.list[index])
         }
+      });
+         },
+         deleteStudent(index) {
+              this.editIndex = index;
+              this.editFormData = { ...this.list[index] };
+              axios
+             .delete(`http://localhost:3333/deletebyid/${this.editFormData.stud_id}`)
+             .then((response) => console.log(response))
+             window.location.reload();
+  }
+         }
+  }       
 
 </script>
 <style>
@@ -65,6 +85,9 @@ table {
   
   tr:hover {
     background-color: #091cec;
+  }
+  .studtable{
+    margin-right: 300px;
   }
 </style>
 

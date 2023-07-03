@@ -19,6 +19,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/stringm">String Method operation</RouterLink>
         <RouterLink to="/studentform">Add Student Details</RouterLink>
         <RouterLink to="/adonis">Show Student Table(DB)</RouterLink>
+        <RouterLink to="/global">Global Table</RouterLink>
 
       </nav>
     <!-- </div> -->

@@ -18,6 +18,7 @@ app.config.globalProperties.$filters = {
     }
   }
 
+
 app.use(router)
 
 app.mount('#app')
