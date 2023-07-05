@@ -2,6 +2,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
+
+
+
 </script>
 
 <template>
@@ -12,6 +15,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <HelloWorld msg="NGP Websmart" /> -->
       <Forms/>
       <nav class="sidenav">
+        <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/student">Student Details</RouterLink>

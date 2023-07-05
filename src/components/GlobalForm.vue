@@ -13,18 +13,19 @@
 </template>
 <script>
   import axios from 'axios'
+  import eventBus from '@/Plugins/event-bus';
 export default{
     name:"GlobalForm",
-    props: {
-    existData: {
-      type: Object,
-      default: null
-    }},
+    
     data(){
         return{
             name:' ',
             rollno:' ',
-            depid:' '
+            depid:' ',
+            stud_id:' ',
+            existData: null,
+            editMode:false,
+            baseurl:import.meta.env.VITE_APP_BASE_URL
         }
     },
     methods:{
@@ -34,31 +35,46 @@ export default{
             roll_no:this.rollno,
             dept_id:this.depid
          }
-            if (this.editMode)
-            {
-            this.$emit("editData", formDetails);
+        if (this.editMode){
+        axios
+        .put(`${this.baseurl}updatedetails/${this.stud_id}`,formDetails)
+        .then((response) => console.log(response))
+        this.successMessage = "Successfully updated."
             this.resetForm();
-            } 
-            else 
-            {
-            this.$emit("studentdetails", formDetails);
+            this.editMode=false;
+            this.emitter.emit("reload", 'trigger');
+
+                  } 
+        else{
+            axios
+         .post(`${this.baseurl}insertstudent`,formDetails)
+         .then((response) => this.emitter.emit("reload", 'trigger'))
             this.resetForm();
+            
             }
         },
-             resetForm() {
+        resetForm() {
             this.name = "";
             this.rollno = "";
             this.depid = "";
     }
          },
-         watch: {
+created() { 
+         this.emitter.on("currentvalue", editFormData => {
+         this.existData = editFormData;
+         console.log(this.existData,'EVENTBUS')
+      
+    });
+  },
+  watch: {
     existData: {
       immediate: true,
       handler(value) {
-        if (value) {
+        if (value !== null) {
           this.name = value.stud_name;
           this.rollno = value.roll_no;
           this.depid = value.dept_id;
+          this.stud_id=value.stud_id
           this.editMode = true;
         } else {
           this.resetForm();
@@ -66,7 +82,7 @@ export default{
       }
     }
   },
-        }
+}
 
 </script>
 <style>

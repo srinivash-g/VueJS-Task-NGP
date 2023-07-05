@@ -14,32 +14,13 @@
 <script>
 export default{
     name:"AdonisForms",
-    props: {
-    existData: {
-      type: Object,
-      default: null
-    }},
     data(){
         return{
             name:' ',
             rollno:' ',
             depid:' '
         }
-    },watch: {
-    existData: {
-      immediate: true,
-      handler(value) {
-        if (value) {
-          this.name = value.stud_name;
-          this.rollno = value.roll_no;
-          this.depid = value.dept_id;
-          this.editMode = true;
-        } else {
-          this.resetForm();
-        }
-      }
-    }
-  },
+    },
     methods:{
         insert(){
             const formDetails={
