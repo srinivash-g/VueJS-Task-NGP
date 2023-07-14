@@ -24,6 +24,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/studentform">Add Student Details</RouterLink>
         <RouterLink to="/adonis">Show Student Table(DB)</RouterLink>
         <RouterLink to="/global">Global Table</RouterLink>
+        <RouterLink to="/employee">Employee(Custom Directive)</RouterLink>
 
       </nav>
     <!-- </div> -->

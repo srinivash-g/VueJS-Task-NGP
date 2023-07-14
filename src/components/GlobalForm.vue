@@ -37,7 +37,7 @@ export default{
          }
         if (this.editMode){
         axios
-        .put(`${this.baseurl}updatedetails/${this.stud_id}`,formDetails)
+        .put(`${this.baseurl}updatedetails/${this.book_id}`,formDetails)
         .then((response) => console.log(response))
         this.successMessage = "Successfully updated."
             this.resetForm();

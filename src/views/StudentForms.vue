@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(student, index) in students" :key="index">
+          <tr v-for="(student, index) in students">
             <td :title="student.name" >{{ $filters.nameLimit(student.name,10) }}</td>
             <td>{{ student.age }}</td>
             <td>{{ student.email }}</td>
